@@ -1,1 +1,3 @@
-# todo-list-nodejs
+# Todo-List
+
+Lista de Tarefas feita em Nodejs
