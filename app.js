@@ -1,19 +1,42 @@
 const yargs = require('yargs');
-const chalk = require('chalk');
+const taskModel = require('./task');
 
 yargs.command({
     command: 'add',
     describe: 'Adiciona uma nova Tarefa',
-    handler: function () {
-        console.log(chalk.green('Adicionando a tarefa'));
+    builder: {
+        name: {
+            describe: "Nome da tarefa",
+            demandOption: true,
+            type: 'string'
+        },
+        description: {
+            describe: "Nome da tarefa",
+            demandOption: true,
+            type: 'string'
+        }
+    },
+    handler: function (argv) {
+        const task = {
+            name: argv.name,
+            description: argv.description
+        }
+        taskModel.addTask(task.name, task.description);
     }
 });
 
 yargs.command({
     command: 'remove',
     describe: 'Remove uma Tarefa',
-    handler: function () {
-        console.log(chalk.red('Removendo a tarefa'));
+    builder: {
+        name: {
+            describe: "Nome da tarefa",
+            demandOption: true,
+            type: 'string'
+        }
+    },
+    handler: function (argv) {
+        taskModel.removeTask(argv.name);
     }
 });
 
@@ -21,16 +44,23 @@ yargs.command({
     command: 'list',
     describe: 'Lista as Tarefas',
     handler: function () {
-        console.log(chalk.yellow('Listando as tarefas'));
+        taskModel.listTasks();
     }
 });
 
 yargs.command({
     command: 'read',
     describe: 'Mostra uma Tarefa',
-    handler: function () {
-        console.log(chalk.blue('Mostrando a tarefa'));
+    builder: {
+        name: {
+            describe: "Nome da tarefa",
+            demandOption: true,
+            type: 'string'
+        }
+    },
+    handler: function (argv) {
+        taskModel.readTask(argv.name);
     }
 });
 
-console.log(yargs.argv);
+yargs.parse();
